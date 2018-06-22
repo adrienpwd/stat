@@ -40,6 +40,8 @@
     ]
   },
   "globals": {
+    "test": false,
+    "global": false,
     "expect": false,
     "beforeAll": false,
     "afterAll": false,
