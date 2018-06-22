@@ -6,10 +6,9 @@ html {
 body {
   font-family: Roboto, sans-serif;
   margin: 0;
-  height: 100%;
   font-size: 14px;
 }
 
 .appBody {
-  margin: 16px;
+  /* margin: 16px; */
 }

@@ -1,11 +1,12 @@
 import { applyMiddleware, compose, createStore } from 'redux';
+import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import thunk from 'redux-thunk';
 
 import rootReducer from './reducers';
-import Routes from './routes';
+import getRoutes from './routes';
 
 // Polyfill for React use of requestAnimationFrame
 import 'raf/polyfill';
@@ -28,11 +29,9 @@ const store = createStore(
   )
 );
 
-const app = document.getElementById('root');
-
 ReactDOM.render(
   <Provider store={store}>
-    <Routes />
+    <BrowserRouter>{getRoutes()}</BrowserRouter>
   </Provider>,
-  app
+  document.getElementById('root')
 );

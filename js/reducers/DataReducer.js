@@ -1,6 +1,6 @@
 import { fromJS } from 'immutable';
 
-const INITIAL_STATE = fromJS({});
+const INITIAL_STATE = fromJS({ a: 'a' });
 
 export const DataReducer = (state = INITIAL_STATE, action = {}) => {
   // const { payload, type } = action;

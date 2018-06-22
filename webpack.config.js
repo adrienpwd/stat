@@ -7,7 +7,7 @@ module.exports = {
   entry: path.resolve(__dirname, 'js/index.js'),
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'app.bundle.js',
+    filename: '[name].bundle.js',
     publicPath: '/'
   },
   devServer: {
@@ -27,12 +27,7 @@ module.exports = {
       {
         loader: 'babel-loader',
         test: /\.js$/,
-        exclude: [/node_modules/],
-        options: {
-          plugins: ['react-hot-loader/babel'],
-          cacheDirectory: true,
-          presets: ['env', 'react']
-        }
+        exclude: [/node_modules/]
       },
       {
         loader: 'json-loader',
@@ -82,7 +77,6 @@ module.exports = {
     ]
   },
   resolve: {
-    modules: [path.resolve(__dirname), 'node_modules'],
     alias: {
       Components: path.resolve(__dirname, './js/components')
     }
