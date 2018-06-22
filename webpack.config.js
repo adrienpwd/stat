@@ -3,24 +3,26 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 module.exports = {
-  entry: {
-    app: './src/index.js'
+  context: __dirname,
+  entry: path.resolve(__dirname, 'js/index.js'),
+  output: {
+    path: path.resolve(__dirname, 'dist'),
+    filename: '[name].bundle.js',
+    publicPath: '/'
   },
   devServer: {
-    contentBase: './dist'
+    historyApiFallback: true,
+    contentBase: path.resolve(__dirname, './js'),
+    port: 8080
   },
   devtool: 'inline-source-map',
   plugins: [
     new CleanWebpackPlugin(['dist']),
     new HtmlWebpackPlugin({
-      title: 'Output Management'
+      title: 'STAT',
+      template: 'js/index.html'
     })
   ],
-  output: {
-    filename: '[name].bundle.js',
-    path: path.resolve(__dirname, 'dist'),
-    publicPath: '/'
-  },
   module: {
     rules: [
       {
