@@ -7,15 +7,14 @@ module.exports = {
   entry: path.resolve(__dirname, 'js/index.js'),
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: '[name].bundle.js',
+    filename: 'app.bundle.js',
     publicPath: '/'
   },
   devServer: {
     historyApiFallback: true,
     contentBase: path.resolve(__dirname, './js'),
-    port: 8080
+    port: 8081
   },
-  devtool: 'inline-source-map',
   plugins: [
     new CleanWebpackPlugin(['dist']),
     new HtmlWebpackPlugin({
@@ -28,11 +27,31 @@ module.exports = {
       {
         loader: 'babel-loader',
         test: /\.js$/,
-        exclude: [/node_modules/]
+        exclude: [/node_modules/],
+        options: {
+          plugins: ['react-hot-loader/babel'],
+          cacheDirectory: true,
+          presets: ['env', 'react']
+        }
       },
       {
         loader: 'json-loader',
         test: /\.json/
+      },
+      {
+        test: /\.css$/,
+        use: [
+          'style-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              modules: true,
+              sourceMap: true,
+              importLoaders: 1,
+              localIdentName: '[name]--[local]--[hash:base64:8]'
+            }
+          }
+        ]
       },
       {
         test: /\.less$/,
@@ -61,5 +80,11 @@ module.exports = {
         test: /\.svg$/
       }
     ]
+  },
+  resolve: {
+    modules: [path.resolve(__dirname), 'node_modules'],
+    alias: {
+      Components: path.resolve(__dirname, './js/components')
+    }
   }
 };
