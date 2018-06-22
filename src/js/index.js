@@ -4,7 +4,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import thunk from 'redux-thunk';
 
-import rootReducer from '../reducers';
+import rootReducer from './reducers';
 import Routes from './routes';
 
 const app = document.getElementById('root');

@@ -3,7 +3,8 @@ import { fromJS } from 'immutable';
 const INITIAL_STATE = fromJS({});
 
 export const DataReducer = (state = INITIAL_STATE, action = {}) => {
-  const { payload, type } = action;
+  // const { payload, type } = action;
+  const { type } = action;
 
   switch (type) {
     default:
