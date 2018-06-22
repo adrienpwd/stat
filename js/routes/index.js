@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { Route } from 'react-router-dom';
 import Navbar from 'Components/Navbar';
 import Loadable from 'react-loadable';
@@ -22,9 +22,11 @@ const LoadableChart = Loadable({
 import styles from './../styles/main.css';
 
 export default () => (
-  <div className={styles.appBody}>
+  <Fragment>
     <Route path="/" component={Navbar} />
-    <Route path="/home" component={LoadableHome} />
-    <Route path="/chart" component={LoadableChart} />
-  </div>
+    <div className={styles.appBody}>
+      <Route path="/home" component={LoadableHome} />
+      <Route path="/chart" component={LoadableChart} />
+    </div>
+  </Fragment>
 );
