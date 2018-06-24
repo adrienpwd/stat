@@ -78,7 +78,11 @@ module.exports = {
   },
   resolve: {
     alias: {
-      Components: path.resolve(__dirname, './js/components')
+      Actions: path.resolve(__dirname, './js/actions'),
+      Components: path.resolve(__dirname, './js/components'),
+      Constants: path.resolve(__dirname, './js/constants'),
+      Ui: path.resolve(__dirname, './js/ui'),
+      Utils: path.resolve(__dirname, './js/utils')
     }
   }
 };

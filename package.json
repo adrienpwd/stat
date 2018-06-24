@@ -50,6 +50,8 @@
     "less": "^3.0.4",
     "less-loader": "^4.1.0",
     "prettier": "^1.13.5",
+    "prop-types": "^15.6.2",
+    "react-immutable-proptypes": "^2.1.0",
     "react-loadable": "^5.4.0",
     "react-test-renderer": "^16.4.1",
     "style-loader": "^0.21.0",
@@ -70,7 +72,11 @@
     "moduleNameMapper": {
       "\\.(css|less|scss)$": "identity-obj-proxy",
       "\\.(gif|ttf|eot|svg)$": "<rootDir>/__mocks__/fileMock.js",
-      "^Components(.*)$": "<rootDir>/js/components$1"
+      "^Actions(.*)$": "<rootDir>/js/actions$1",
+      "^Components(.*)$": "<rootDir>/js/components$1",
+      "^Constants(.*)$": "<rootDir>/js/constants$1",
+      "^Ui(.*)$": "<rootDir>/js/ui$1",
+      "^Utils(.*)$": "<rootDir>/js/utils$1"
     },
     "setupFiles": [
       "<rootDir>/__mocks__/rafMock.js"
