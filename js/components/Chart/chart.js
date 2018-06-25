@@ -5,27 +5,49 @@ import {
   VictoryBar,
   VictoryChart
 } from 'victory';
+import { connect } from 'react-redux';
 
-export default class Chart extends Component {
+export class Chart extends Component {
   render() {
-    const { data, height, width } = this.props;
-    console.log(this.props);
+    const {
+      datasets,
+      match: { params }
+    } = this.props;
 
-    return (
-      <VictoryChart
-        width={width}
-        height={height}
-        containerComponent={<VictoryContainer responsive={false} />}
-        // theme={VictoryTheme.material}
-        padding={{ top: 0, left: 100, right: 50, bottom: 0 }}
-      >
-        <VictoryBar
-          x={d => d.id}
-          y={d => d.price}
-          style={{ data: { fill: '#c43a31' } }}
-          data={data}
-        />
-      </VictoryChart>
+    const index = datasets.findIndex(
+      dataset => dataset.get('name') === params.chart
     );
+
+    console.log(datasets.get(index));
+
+    return <div>Chart: {params.chart}</div>;
+
+    // return (
+    //   <VictoryChart
+    //     width={width}
+    //     height={height}
+    //     containerComponent={<VictoryContainer responsive={false} />}
+    //     // theme={VictoryTheme.material}
+    //     padding={{ top: 0, left: 100, right: 50, bottom: 0 }}
+    //   >
+    //     <VictoryBar
+    //       x={d => d.id}
+    //       y={d => d.price}
+    //       style={{ data: { fill: '#c43a31' } }}
+    //       data={data}
+    //     />
+    //   </VictoryChart>
+    // );
   }
 }
+
+const mapStateToProps = state => ({
+  datasets: state.Data.get('datasets')
+});
+
+const mapDispatchToProps = {};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Chart);

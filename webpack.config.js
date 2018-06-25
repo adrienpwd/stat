@@ -15,13 +15,7 @@ module.exports = {
     contentBase: path.resolve(__dirname, './js'),
     port: 8081
   },
-  plugins: [
-    new CleanWebpackPlugin(['dist']),
-    new HtmlWebpackPlugin({
-      title: 'STAT',
-      template: 'js/index.html'
-    })
-  ],
+  plugins: [new CleanWebpackPlugin(['dist'])],
   module: {
     rules: [
       {
