@@ -1,4 +1,4 @@
-import { List, Map, fromJS } from 'immutable';
+import { List, Map } from 'immutable';
 import Constants from 'Constants';
 
 const INITIAL_STATE = Map({
@@ -10,13 +10,15 @@ const INITIAL_STATE = Map({
 
 const onPopulateDataStore = state => state.set('converting', true);
 
-const onPopulateDataStoreSuccess = (state, { id, json, csv }) => {
+const onPopulateDataStoreSuccess = (state, { csv, json, modified, name }) => {
   const dataset = Map({
-    id,
+    name,
+    modified,
     csv,
     json
   });
   let datasets = state.get('datasets');
+
   datasets = datasets.push(dataset);
   return state.merge({
     datasets,
@@ -28,6 +30,12 @@ const onPopulateDataStoreSuccess = (state, { id, json, csv }) => {
 
 const onError = (state, error) => state.set('error', error);
 
+const onDeleteDataset = (state, { name }) => {
+  let datasets = state.get('datasets');
+  const index = datasets.findIndex(dataset => dataset.get('name') === name);
+  return state.deleteIn(['datasets', index]);
+};
+
 export const DataReducer = (state = INITIAL_STATE, action = {}) => {
   const { error, payload, type } = action;
 
@@ -38,6 +46,8 @@ export const DataReducer = (state = INITIAL_STATE, action = {}) => {
       return onPopulateDataStoreSuccess(state, payload);
     case Constants.DISPATCH_ERROR:
       return onError(state, error);
+    case Constants.DELETE_DATASET:
+      return onDeleteDataset(state, payload);
     default:
       return state;
   }

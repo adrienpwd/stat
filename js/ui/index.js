@@ -1,5 +1,4 @@
 import Input from './input';
+import Icon from './icon';
 
-export default {
-  Input
-};
+export { Icon, Input };

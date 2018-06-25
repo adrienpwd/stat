@@ -1,9 +1,64 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { deleteDataset } from 'Actions';
+import { Icon } from 'Ui';
+import moment from 'moment';
 import styles from './styles.less';
 
-export default class Dataset extends Component {
+export class Dataset extends Component {
+  state = { deleteButtonVisible: false };
   render() {
     const { dataset } = this.props;
-    return <div className={styles.container}>Name: {dataset.get('id')}</div>;
+    const { deleteButtonVisible } = this.state;
+
+    return (
+      <div
+        className={styles.container}
+        onMouseOver={this._handleMouseEnter}
+        onFocus={this._handleMouseEnter}
+        onMouseLeave={this._handleMouseLeave}
+        onBlur={this._handleMouseLeave}
+      >
+        <div className={styles.header}>
+          {deleteButtonVisible && (
+            <Icon
+              className={styles.clearIcon}
+              onClick={this._handleDelete}
+              name="clear"
+            />
+          )}
+        </div>
+        <div className={styles.group}>
+          <span className={styles.name}>{dataset.get('name')}</span>
+          <span className={styles.modified}>
+            {moment(dataset.get('modified')).format('YYYY/MM/DD HH.mm')}
+          </span>
+        </div>
+      </div>
+    );
   }
+
+  _handleMouseEnter = () => {
+    this.setState({ deleteButtonVisible: true });
+  };
+
+  _handleMouseLeave = () => {
+    this.setState({ deleteButtonVisible: false });
+  };
+
+  _handleDelete = () => {
+    const { dataset, deleteDataset } = this.props;
+    deleteDataset(dataset.get('name'));
+  };
 }
+
+const mapStateToProps = state => ({});
+
+const mapDispatchToProps = {
+  deleteDataset
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Dataset);

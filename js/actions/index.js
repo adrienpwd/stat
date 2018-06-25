@@ -28,7 +28,8 @@ export const processData = file => {
         dispatch({
           type: Constants.POPULATE_DATA_STORE_SUCCESS,
           payload: {
-            id: file.name,
+            name: file.name,
+            modified: file.lastModifiedDate,
             csv: event.target.result,
             json: csvtojson(event.target.result)
           }
@@ -42,10 +43,13 @@ export const processData = file => {
       reader.onload = function(e) {
         const result = JSON.parse(e.target.result);
 
+        console.log(file);
+
         dispatch({
           type: Constants.POPULATE_DATA_STORE_SUCCESS,
           payload: {
-            id: file.name,
+            name: file.name,
+            modified: file.lastModifiedDate,
             json: result,
             csv: jsontocsv(result)
           }
@@ -54,6 +58,11 @@ export const processData = file => {
     }
   };
 };
+
+export const deleteDataset = name => ({
+  type: Constants.DELETE_DATASET,
+  payload: { name }
+});
 
 export default {
   processData

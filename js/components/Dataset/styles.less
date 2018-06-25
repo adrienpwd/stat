@@ -1,15 +1,43 @@
 .container {
-  align-items: center;
-  background-color: #e6e6e6;
+  background-color: #f2f2f2;
   border: solid 1px lightgrey;
   cursor: pointer;
   display: flex;
+  flex-direction: column;
   height: 150px;
-  justify-content: center;
   margin: 8px;
   width: 150px;
 
   &:hover {
-    background-color: #d3d3d3;
+    background-color: #e6e6e6;
   }
+}
+
+.header {
+  display: flex;
+  height: 32px;
+  justify-content: flex-end;
+}
+
+.group {
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.name {
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+
+.modified {
+  font-size: 12px;
+}
+
+.clearIcon {
+  align-self: flex-end;
+  margin: 8px;
+  fill: red;
 }
