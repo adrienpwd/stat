@@ -1,33 +1,60 @@
 import Constants from 'Constants';
-import { csvtojson } from 'Utils';
+import { csvtojson, jsontocsv } from 'Utils';
 
-export const convertCSVtoJSON = file => {
+export const processData = file => {
   return dispatch => {
     dispatch({
-      type: Constants.CONVERT_CSV_TO_JSON
+      type: Constants.POPULATE_DATA_STORE
     });
 
-    let csv;
+    if (!window || !window.File || !window.FileReader) {
+      dispatch({
+        type: Constants.DISPATCH_ERROR,
+        error: "Your Browser doesn't support the File API"
+      });
+    }
+
+    if (file.type !== 'text/csv' || file.type !== 'application/json') {
+      dispatch({
+        type: Constants.DISPATCH_ERROR,
+        error: 'Please select a valid file, we accept both csv and json files.'
+      });
+    }
 
     if (file.type === 'text/csv') {
       const reader = new FileReader();
       reader.readAsText(file);
       reader.onload = event => {
-        csv = csvtojson(event.target.result);
         dispatch({
-          type: Constants.CONVERT_CSV_TO_JSON_SUCCESS,
-          payload: { file: csv }
+          type: Constants.POPULATE_DATA_STORE_SUCCESS,
+          payload: {
+            id: file.name,
+            csv: event.target.result,
+            json: csvtojson(event.target.result)
+          }
         });
       };
-    } else {
-      dispatch({
-        type: Constants.CONVERT_CSV_TO_JSON_ERROR,
-        error: 'Please select a valid csv file.'
-      });
+    }
+
+    if (file.type === 'application/json') {
+      const reader = new FileReader();
+      reader.readAsText(file);
+      reader.onload = function(e) {
+        const result = JSON.parse(e.target.result);
+
+        dispatch({
+          type: Constants.POPULATE_DATA_STORE_SUCCESS,
+          payload: {
+            id: file.name,
+            json: result,
+            csv: jsontocsv(result)
+          }
+        });
+      };
     }
   };
 };
 
 export default {
-  convertCSVtoJSON
+  processData
 };

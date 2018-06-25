@@ -1,47 +1,76 @@
 import React, { Component } from 'react';
 import Input from 'Ui/input';
 import { connect } from 'react-redux';
-import { convertCSVtoJSON } from 'Actions';
+import { processData } from 'Actions';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import PropTypes from 'prop-types';
+import Dataset from 'Components/Dataset';
+import styles from './styles.less';
 
 export class Home extends Component {
   static displayName = 'Home';
 
   static propTypes = {
     data: ImmutablePropTypes.list,
-    convertCSVtoJSON: PropTypes.func.isRequired
+    processData: PropTypes.func.isRequired
   };
 
-  render() {
-    const { data } = this.props;
-    console.log(data);
+  state = {
+    height: 0,
+    width: 0
+  };
 
+  componentDidMount() {
+    window.addEventListener('resize', this.updateDimensions);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.updateDimensions);
+  }
+
+  render() {
     return (
       <div>
         <h2>Home</h2>
         <Input onChange={this._handleInputChange} type={'file'} />
+        <div className={styles.datasetsContainer}>{this._renderDatasets()}</div>
       </div>
     );
   }
 
+  _renderDatasets = () => {
+    const { datasets } = this.props;
+    return datasets.map((dataset, index) => (
+      <Dataset key={index} dataset={dataset} />
+    ));
+  };
+
   _handleInputChange = e => {
-    const { convertCSVtoJSON } = this.props;
+    const { processData } = this.props;
     if (e.target.files[0]) {
-      convertCSVtoJSON(e.target.files[0]);
+      processData(e.target.files[0]);
     }
+  };
+
+  updateDimensions = () => {
+    this.setState({
+      height: window.innerHeight - 150,
+      width: window.innerWidth
+    });
   };
 }
 
 const mapStateToProps = state => ({
   error: state.Data.get('error'),
-  data: state.Data.get('data'),
-  converted: state.Data.get('converted'),
-  converting: state.Data.get('converting')
+  datasets: state.Data.get('datasets')
+  // csv: state.Data.get('csv'),
+  // json: state.Data.get('json'),
+  // converted: state.Data.get('converted'),
+  // converting: state.Data.get('converting')
 });
 
 const mapDispatchToProps = {
-  convertCSVtoJSON
+  processData
 };
 
 export default connect(
