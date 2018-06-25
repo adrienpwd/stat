@@ -6,9 +6,12 @@ import moment from 'moment';
 import styles from './styles.less';
 
 export class Dataset extends Component {
+  static displayName = 'Dataset';
+
   state = { deleteButtonVisible: false };
+
   render() {
-    const { dataset } = this.props;
+    const { dataset, onClick } = this.props;
     const { deleteButtonVisible } = this.state;
 
     return (
@@ -18,6 +21,7 @@ export class Dataset extends Component {
         onFocus={this._handleMouseEnter}
         onMouseLeave={this._handleMouseLeave}
         onBlur={this._handleMouseLeave}
+        onClick={onClick}
       >
         <div className={styles.header}>
           {deleteButtonVisible && (

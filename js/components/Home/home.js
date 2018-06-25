@@ -5,6 +5,7 @@ import { processData } from 'Actions';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import PropTypes from 'prop-types';
 import Dataset from 'Components/Dataset';
+import { withRouter } from 'react-router-dom';
 import styles from './styles.less';
 
 export class Home extends Component {
@@ -41,7 +42,11 @@ export class Home extends Component {
   _renderDatasets = () => {
     const { datasets } = this.props;
     return datasets.map((dataset, index) => (
-      <Dataset key={index} dataset={dataset} />
+      <Dataset
+        key={index}
+        dataset={dataset}
+        onClick={() => this._handleClickDataset(dataset)}
+      />
     ));
   };
 
@@ -50,6 +55,10 @@ export class Home extends Component {
     if (e.target.files[0]) {
       processData(e.target.files[0]);
     }
+  };
+
+  _handleClickDataset = dataset => {
+    this.props.history.push(`/home/${dataset.get('name')}`);
   };
 
   updateDimensions = () => {
@@ -76,4 +85,4 @@ const mapDispatchToProps = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Home);
+)(withRouter(Home));

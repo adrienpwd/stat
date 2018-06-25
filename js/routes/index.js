@@ -25,8 +25,8 @@ export default () => (
   <Fragment>
     <Route path="/" component={Navbar} />
     <div className={styles.appBody}>
-      <Route path="/home" component={LoadableHome} />
-      <Route path="/chart" component={LoadableChart} />
+      <Route exact path="/home" component={LoadableHome} />
+      <Route path="/home/:chart" component={LoadableChart} />
     </div>
   </Fragment>
 );

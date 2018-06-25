@@ -9,6 +9,7 @@ import {
 export default class Chart extends Component {
   render() {
     const { data, height, width } = this.props;
+    console.log(this.props);
 
     return (
       <VictoryChart
